@@ -11,11 +11,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cài đặt PostgreSQL Client version 18
-          run: |
-            sudo apt-get update
-            sudo apt-get install -y postgresql-common
-            sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-            sudo apt-get install -y postgresql-client-18
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y postgresql-client-18
 
       - name: Export dữ liệu từ Source DB
         env:
