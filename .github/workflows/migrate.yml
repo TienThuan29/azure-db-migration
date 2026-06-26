@@ -30,7 +30,7 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DEST_PASSWORD }}
         run: |
-          pg_restore -v --no-owner --host=${{ secrets.DEST_HOST }} \
+          pg_restore -v --no-owner --no-privileges --host=${{ secrets.DEST_HOST }} \
             --username=${{ secrets.DEST_USER }} \
             --dbname=${{ secrets.DB_NAME }} \
             data.dump
