@@ -21,7 +21,7 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.SRC_PASSWORD }}
         run: |
-          pg_dump -Fc -v --host=${{ secrets.SRC_HOST }} \
+          pg_dump -Fc -v -n public --host=${{ secrets.SRC_HOST }} \
             --username=${{ secrets.SRC_USER }} \
             --dbname=${{ secrets.DB_NAME }} \
             -f data.dump
