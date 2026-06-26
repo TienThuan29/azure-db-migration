@@ -1,0 +1,34 @@
+name: PostgreSQL Migration
+
+on:
+  workflow_dispatch: # Cho phép xuất hiện nút bấm chạy thủ công trên GitHub
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Cài đặt PostgreSQL Client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Export dữ liệu từ Source DB
+        env:
+          PGPASSWORD: ${{ secrets.SRC_PASSWORD }}
+        run: |
+          pg_dump -Fc -v --host=${{ secrets.SRC_HOST }} \
+            --username=${{ secrets.SRC_USER }} \
+            --dbname=${{ secrets.DB_NAME }} \
+            -f data.dump
+
+      - name: Import dữ liệu vào Target DB
+        env:
+          PGPASSWORD: ${{ secrets.DEST_PASSWORD }}
+        run: |
+          pg_restore -v --no-owner --host=${{ secrets.DEST_HOST }} \
+            --username=${{ secrets.DEST_USER }} \
+            --dbname=${{ secrets.DB_NAME }} \
+            data.dump
